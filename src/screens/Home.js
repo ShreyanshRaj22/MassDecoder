@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import bannerImg from "../images/banner.jpg";
+import searchIcon from "../images/upload-icon.png"; // Import the new search icon
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to store the search query
   const [searchResults, setSearchResults] = useState([]); // State to store search results
   const [containerHeight, setContainerHeight] = useState("90vh"); // Initial container height
+  const [showUploadOverlay, setShowUploadOverlay] = useState(false); // State to control upload overlay visibility
 
   const imgStyles = {
     width: "100vw",
@@ -31,26 +33,43 @@ const Home = () => {
     display: "flex",
     alignItems: "center",
     padding: "20px",
-    zIndex: 2, // Ensures it sits on top of the background image
+    zIndex: 2,
+    justifyContent: "space-between",
   };
 
   const iconStyles = {
-    fontSize: "20px",
-    color: "#777",
-    cursor: "pointer", // Add pointer cursor to indicate it's clickable
+    height: "30px",
+    width: "30px",
+    cursor: "pointer",
   };
 
   const inputStyles = {
-    flex: 1,
     height: "40px",
     border: "none",
     outline: "none",
     fontSize: "18px",
     paddingLeft: "10px",
+    flex: 1, // Fill remaining space in the flex container
   };
 
   const handleClick = async () => {
-    // Your search handling logic
+    try {
+      const response = await fetch(
+        `http://localhost:5000/search?query=${searchQuery}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error("Error searching for artworks:", error);
+    }
+  };
+
+  // Function to toggle upload overlay visibility
+  const toggleUploadOverlay = () => {
+    setShowUploadOverlay(!showUploadOverlay);
   };
 
   useEffect(() => {
@@ -78,16 +97,46 @@ const Home = () => {
     setContainerHeight(newContainerHeight);
   }, [searchResults]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create a FormData object
+    const formData = new FormData(e.target);
+
+    try {
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.text();
+      console.log(data); // Log response from server
+      // Reset search query
+      setSearchQuery("");
+      // Close the upload overlay
+      toggleUploadOverlay();
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Handle errors
+    }
+  };
+
   return (
     <div>
       <div style={containerStyles}>
         <img src={bannerImg} alt="Banner" style={imgStyles} />
         <div style={boxStyles}>
-          <i
-            style={iconStyles}
-            className="fa-solid fa-magnifying-glass"
-            onClick={handleClick}
-          ></i>
+          <div>
+            <img
+              src={searchIcon}
+              alt="Search"
+              style={iconStyles}
+              onClick={toggleUploadOverlay}
+            />{" "}
+            {/* New icon */}
+          </div>
           <input
             style={inputStyles}
             type="text"
@@ -95,6 +144,11 @@ const Home = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          <i
+            style={iconStyles}
+            className="fa-solid fa-magnifying-glass"
+            onClick={handleClick}
+          ></i>
         </div>
       </div>
       {/* Display search results */}
@@ -119,6 +173,65 @@ const Home = () => {
           ))}
         </div>
       </div>
+      {/* Upload overlay */}
+      {showUploadOverlay && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 3,
+          }}
+          onClick={toggleUploadOverlay} // Close overlay when clicked outside
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Box shadow for depth
+            }}
+            onClick={(e) => e.stopPropagation()} // Prevent click events from bubbling up
+          >
+            {/* Upload form */}
+            <h2>Upload Artwork</h2>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Style:
+                <input type="text" name="style" required />
+              </label>
+              <br />
+              <label>
+                Artist:
+                <input type="text" name="artist" required />
+              </label>
+              <br />
+              <label>
+                Category:
+                <input type="text" name="category" required />
+              </label>
+              <br />
+              <label>
+                Name:
+                <input type="text" name="name" required />
+              </label>
+              <br />
+              <label>
+                Image:
+                <input type="file" name="image" required />
+              </label>
+              <br />
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
