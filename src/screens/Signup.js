@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import "./Signup.css";
 const Signup = () => {
     const [credentials, setcredentials] = useState({
         name: "",
@@ -41,7 +41,7 @@ const Signup = () => {
                 className="border border-3 p-3 border-info rounded-3"
             >
                 <div className="form-group my-2">
-                    <label>Username</label>
+                    <label>  . </label>
                     <input
                         type="text"
                         name="name"
@@ -53,7 +53,7 @@ const Signup = () => {
                     />
                 </div>
                 <div className="form-group my-2">
-                    <label>Email address</label>
+                    <label> .. </label>
                     <input
                         type="email"
                         name="email"
@@ -66,7 +66,7 @@ const Signup = () => {
                     />
                 </div>
                 <div className="form-group my-2">
-                    <label>Password</label>
+                    <label> ...</label>
                     <input
                         type="password"
                         name="password"
