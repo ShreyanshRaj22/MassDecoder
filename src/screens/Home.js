@@ -50,20 +50,27 @@ const Home = () => {
   };
 
   const handleClick = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/search?query=${searchQuery}`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setSearchResults(data);
-    } catch (error) {
-      console.error("Error searching for artworks:", error);
-      // Handle errors
-    }
+    // Your search handling logic
   };
+
+  useEffect(() => {
+    // Fetch random artworks when the component mounts
+    const fetchRandomArtworks = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/artwork?limit=9`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setSearchResults(data);
+      } catch (error) {
+        console.error("Error fetching random artworks:", error);
+        // Handle errors
+      }
+    };
+
+    fetchRandomArtworks();
+  }, []); // Empty dependency array to ensure this effect runs only once, when the component mounts
 
   useEffect(() => {
     // Update container height when search results change
