@@ -136,7 +136,7 @@ const Home = () => {
               onClick={toggleUploadOverlay}
             />{" "}
             {/* New icon */}
-          </div>
+          </div>z   
           <input
             style={inputStyles}
             type="text"
