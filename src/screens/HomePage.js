@@ -1,5 +1,6 @@
 import React from "react";
 import backgroundImage from "../images/banner.jpg";
+import Navbar from "../components/Navbar";
 
 
 const Homepage = () => {
@@ -54,40 +55,43 @@ const Homepage = () => {
     //     }
     // };
     return (
-        <div
-            style={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                height: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                color: 'white',
-                padding: '0 2rem',
-            }}
-        >
-            <div style={{ maxWidth: '600px' }}>
-                <h1 style={{ fontSize: '5rem', marginBottom: '1rem', color: 'white', fontWeight: '600' }}>
-                    Artisan Canvas
-                </h1>
-                <p style={{ fontSize: '1.2rem', marginBottom: '2rem', color: 'white' }}>
-                    Unveiling the Boundless Beauty of Artistry! The world is but a canvas to our imagination.
-                </p>
-                <button
-                    style={{
-                        backgroundColor: '#6b1cff',
-                        color: 'white',
-                        padding: '10px 20px',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    Adventure is worthwhile. Take a tour »
-                </button>
-            </div>
+        <>
+            <Navbar></Navbar>
+            <div
+                style={{
+                    backgroundImage: `url(${backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'white',
+                    padding: '0 2rem',
+                }}
+            >
+                <div style={{ maxWidth: '600px' }}>
+                    <h1 style={{ fontSize: '5rem', marginBottom: '1rem', color: 'white', fontWeight: '600' }}>
+                        Artisan Canvas
+                    </h1>
+                    <p style={{ fontSize: '1.2rem', marginBottom: '2rem', color: 'white' }}>
+                        Unveiling the Boundless Beauty of Artistry! The world is but a canvas to our imagination.
+                    </p>
+                    <button
+                        style={{
+                            backgroundColor: '#6b1cff',
+                            color: 'white',
+                            padding: '10px 20px',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        Adventure is worthwhile. Take a tour »
+                    </button>
+                </div>
 
-        </div>
+            </div>
+        </>
     );
 };
 
