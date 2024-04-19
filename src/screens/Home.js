@@ -91,8 +91,14 @@ const Home = () => {
               alt="Search"
               className="search-icon"
               onClick={toggleUploadOverlay}
+<<<<<<< HEAD
+            />{" "}
+            {/* New icon */}
+          </div>z   
+=======
             />
           </div>
+>>>>>>> 17897f66102298c5852b0a01fdfe001be1343d86
           <input
             className="search-input"
             type="text"
