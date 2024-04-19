@@ -8,14 +8,21 @@
     width: 100vw;
     position: relative;
   }
+
+.navbar {
+  width:100vw;
+  position: fixed;
+  top: 0%;
+}
   
   /* Banner Image Styles */
   .banner-img {
-    width: 200%;
-    height: 100%;
-    object-fit:cover;
+    width: 100vw; 
+    height: 100%; 
+    object-fit: cover;
     filter: blur(2.5px);
-  }
+}
+
   
   /* Search Box Styles */
   .search-box {
@@ -107,45 +114,6 @@
   .form-group {
     margin-bottom: 1.5rem;
   }
-/*   
-  .form-control {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.25;
-    color: #495057;
-    background-color: #fff;
-    background-image: none;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  }
-  
-  .custom-file-input {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: calc(2.25rem + 2px);
-    margin: 0;
-    opacity: 0;
-  }
-  
-  .custom-file-label {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    height: calc(2.25rem + 2px);
-    padding: 0.5rem 0.75rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-  } */
 
   .form-group.row {
     margin-bottom: 1.5rem;
