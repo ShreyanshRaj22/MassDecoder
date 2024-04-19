@@ -7,17 +7,19 @@ import {
 import Home from "./screens/Home"
 import Login from "./screens/Login"
 import Signup from "./screens/Signup"
+import Profile from './screens/Profile';
 // import Footer from './screens/Footer';
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-        <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/signup" element={<Signup />}></Route>
           <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/profile" element={<Profile />}></Route>
           {/* <Route exact path="/footer" element={<Footer />}></Route> */}
-         
+
         </Routes>
       </Router>
     </div>

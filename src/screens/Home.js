@@ -73,6 +73,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="container">
         <img src={bannerImg} alt="Banner" className="banner-img" />
         <div className="search-box">
