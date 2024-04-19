@@ -1,56 +1,13 @@
 import React, { useState, useEffect } from "react";
 import bannerImg from "../images/banner.jpg";
-import searchIcon from "../images/upload-icon.png"; // Import the new search icon
+import searchIcon from "../images/upload-icon.png";
+import "./Home.css";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to store the search query
   const [searchResults, setSearchResults] = useState([]); // State to store search results
   const [containerHeight, setContainerHeight] = useState("90vh"); // Initial container height
   const [showUploadOverlay, setShowUploadOverlay] = useState(false); // State to control upload overlay visibility
-
-  const imgStyles = {
-    width: "100vw",
-    height: "90vh",
-    objectFit: "cover",
-    filter: "blur(2.5px)",
-  };
-
-  const containerStyles = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: containerHeight, // Dynamically set container height
-    width: "100vw",
-    position: "relative", // Allows absolute positioning within
-  };
-
-  const boxStyles = {
-    position: "absolute", // Absolute position within the flex container
-    width: "500px",
-    height: "50px",
-    backgroundColor: "white",
-    borderRadius: "30px",
-    display: "flex",
-    alignItems: "center",
-    padding: "20px",
-    zIndex: 2,
-    justifyContent: "space-between",
-  };
-
-  const iconStyles = {
-    height: "30px",
-    width: "30px",
-    cursor: "pointer",
-  };
-
-  const inputStyles = {
-    height: "40px",
-    border: "none",
-    outline: "none",
-    fontSize: "18px",
-    paddingLeft: "10px",
-    flex: 1, // Fill remaining space in the flex container
-  };
 
   const handleClick = async () => {
     try {
@@ -125,49 +82,41 @@ const Home = () => {
 
   return (
     <div>
-      <div style={containerStyles}>
-        <img src={bannerImg} alt="Banner" style={imgStyles} />
-        <div style={boxStyles}>
+      <div className="container">
+        <img src={bannerImg} alt="Banner" className="banner-img" />
+        <div className="search-box">
           <div>
             <img
               src={searchIcon}
               alt="Search"
-              style={iconStyles}
+              className="search-icon"
               onClick={toggleUploadOverlay}
-            />{" "}
-            {/* New icon */}
+            />
           </div>
           <input
-            style={inputStyles}
+            className="search-input"
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <i
-            style={iconStyles}
-            className="fa-solid fa-magnifying-glass"
+            className="fa-solid fa-magnifying-glass search-icon"
             onClick={handleClick}
           ></i>
         </div>
       </div>
       {/* Display search results */}
-      <div className="container mt-4" style={{ maxWidth: "960px" }}>
-        <div className="row">
+      <div className="search-results-container">
+        <div className="search-results-row">
           {searchResults.map((artwork, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card">
-                <img
-                  src={artwork.image}
-                  className="card-img-top"
-                  alt={artwork.name}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{artwork.name}</h5>
-                  <p className="card-text">Style: {artwork.style}</p>
-                  <p className="card-text">Artist: {artwork.artist}</p>
-                  <p className="card-text">Category: {artwork.category}</p>
-                </div>
+            <div key={index} className="search-result-card">
+              <img src={artwork.image} alt={artwork.name} />
+              <div className="search-result-card-body">
+                <h5 className="card-title">{artwork.name}</h5>
+                <p className="card-text">Style: {artwork.style}</p>
+                <p className="card-text">Artist: {artwork.artist}</p>
+                <p className="card-text">Category: {artwork.category}</p>
               </div>
             </div>
           ))}
@@ -175,60 +124,51 @@ const Home = () => {
       </div>
       {/* Upload overlay */}
       {showUploadOverlay && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 3,
-          }}
-          onClick={toggleUploadOverlay} // Close overlay when clicked outside
-        >
+        <div className="upload-overlay" onClick={toggleUploadOverlay}>
           <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Box shadow for depth
-            }}
-            onClick={(e) => e.stopPropagation()} // Prevent click events from bubbling up
+            className="upload-form-container"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Upload form */}
             <h2>Upload Artwork</h2>
             <form onSubmit={handleSubmit}>
-              <label>
-                Style:
-                <input type="text" name="style" required />
-              </label>
-              <br />
-              <label>
-                Artist:
-                <input type="text" name="artist" required />
-              </label>
-              <br />
-              <label>
-                Category:
-                <input type="text" name="category" required />
-              </label>
-              <br />
-              <label>
-                Name:
-                <input type="text" name="name" required />
-              </label>
-              <br />
-              <label>
-                Image:
-                <input type="file" name="image" required />
-              </label>
-              <br />
-              <button type="submit">Upload</button>
-            </form>
+            <div className="form-group row">
+              <label htmlFor="style" className="col-sm-3 col-form-label">Style:</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" name="style" required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="artist" className="col-sm-3 col-form-label">Artist:</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" name="artist" required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="category" className="col-sm-3 col-form-label">Category:</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" name="category" required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="name" className="col-sm-3 col-form-label">Name:</label>
+              <div className="col-sm-9">
+                <input type="text" className="form-control" name="name" required />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="image" className="col-sm-3 col-form-label">Image:</label>
+              <div className="col-sm-9 custom-file">
+                <input type="file" className="custom-file-input" id="image" name="image" required />
+                <label className="custom-file-label" htmlFor="image">Choose File  </label>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-sm-3"></div>
+              <div className="col-sm-9">
+                <button type="submit" className="btn btn-primary">Upload</button>
+              </div>
+            </div>
+          </form>
           </div>
         </div>
       )}
